@@ -1,6 +1,7 @@
 import json
 import argparse
 import os
+import itertools
 
 def read_json_from_file(file_path):
     with open(file_path, 'r') as file:
@@ -9,19 +10,24 @@ def read_json_from_file(file_path):
 
 def extractingdata(orders_data):
     for order in orders_data:
-        name = order['name']
-        phone = order['phone']
-        print(f"Name extracted from order: {name}")
-        print(f"Phone extracted from order: {phone}")
-        add_customer(phone,name)
-        items = order['items']
-        for item in items:
-            # print(item)    
-            itemname=item['name']
-            itemprice=item['price']
-            print(f"ItemName extracted from order: {itemname}")
-            print(f"ItemPrice extracted from order: {itemprice}")
-            add_items(itemname,itemprice)
+    #     name = order['name']
+    #     phone = order['phone']
+    #     print(f"Name extracted from order: {name}")
+    #     print(f"Phone extracted from order: {phone}")
+        add_customer(order['phone'],order['name'])
+        items=itertools.chain.from_iterable((item['name'],item['price']) for item in order['items'])
+        # print(list(items))
+        for itemname, itemprice in zip(items, items):
+            add_items(itemname, itemprice)
+    #    items = order['items']
+    #     for item in items:
+    #         # print(item)    
+    #         itemname=item['name']
+    #         itemprice=item['price']
+    #         print(f"ItemName extracted from order: {itemname}")
+    #         print(f"ItemPrice extracted from order: {itemprice}")
+    #         add_items(itemname,itemprice)
+
 
 
 def add_customer(phone_number, customer_name):
