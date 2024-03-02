@@ -10,9 +10,8 @@ Python3 installation required.
 
 ### Installing Packages that are required in the python program :
 
-pip install json 
-pip install argparse
+- pip install json 
+- pip install argparse
+(If not installed only)
 
-If not installed only.
-
-To run this Python Project "python app.py jsonfilename"
+To run this Python Project `python app.py jsonfilename`
