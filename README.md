@@ -2,7 +2,7 @@
 
 ## Project Description :
 
-This is a Project to segreate a a JSON file data into two parts one consisting of Customer data only and other consisting of Orders data.
+This is a Project to segreate a JSON file data into two parts one consisting of Customer data only and other consisting of Orders data.
 
 ## Installation and Steps to run the code.
 
