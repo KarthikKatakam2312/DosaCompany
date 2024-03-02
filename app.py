@@ -17,8 +17,11 @@ def extractingdata(orders_data):
         add_customer(order['phone'],order['name'])
         items=itertools.chain.from_iterable((item['name'],item['price']) for item in order['items'])
         # print(list(items))
-        for itemname, itemprice in zip(items, items):
-            add_items(itemname, itemprice)
+        for item in order["items"]:
+            item_name = item["name"]
+            items_info.setdefault(item_name, {"price": item["price"], "orders": 0})
+            items_info[item_name]["orders"] += 1
+    add_items(items_info)
     #    items = order['items']
     #     for item in items:
     #         # print(item)    
@@ -45,17 +48,15 @@ def add_customer(phone_number, customer_name):
 
     print(f"Customer '{customer_name}' with phone number '{phone_number}' added successfully.")
      
-def add_items(itemname, itemprice):
+def add_items(itemdata):
     file_path = "items.json"
 
     if os.path.exists(file_path):
         with open(file_path, 'r') as file:
-            item_data = json.load(file)
+            itemdata = json.load(file)
     else:
-        item_data = {}
-    item_data[itemname] = itemprice
-    with open(file_path, 'w') as file:
-        json.dump(item_data, file, indent=4)
+        with open(file_path, 'w') as file:
+            json.dump(itemdata, file, indent=4)
 
 
 if __name__ == "__main__":
@@ -64,6 +65,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     orders_data = read_json_from_file(args.filename)
+    items_info = {}
+
 
     if orders_data:
         print("Orders read successfully:")
